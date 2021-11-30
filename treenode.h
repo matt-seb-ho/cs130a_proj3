@@ -9,6 +9,9 @@ struct TreeNode {
 	// height
 	int height = 1;
 
+	// label for graph algorithm purposes
+	int label = -1;
+
 	// tree pointers
 	TreeNode* parent = nullptr;
 	TreeNode* left = nullptr;
