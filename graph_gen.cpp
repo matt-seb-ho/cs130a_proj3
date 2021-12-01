@@ -20,6 +20,10 @@ TreeNode* GraphGenerator::lookup(int num) {
 	return node;
 }
 
+TreeNode* GraphGenerator::getRoot() {
+	return root;
+}
+
 void GraphGenerator::printInOrder() {
 	if (root) {
 		printOut = "";

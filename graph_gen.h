@@ -10,6 +10,7 @@ class GraphGenerator {
 
 		// accessors
 		TreeNode* lookup(int num);
+		TreeNode* getRoot();
 		void printInOrder();
 		void printPreOrder();
 

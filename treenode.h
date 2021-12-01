@@ -3,14 +3,11 @@
 #include <vector>
 
 struct TreeNode {
-	// vertex number
+	// vertex number, AVL tree height, component label, visited status
 	int num;
-
-	// height
 	int height = 1;
-
-	// label for graph algorithm purposes
 	int label = -1;
+	bool visited = false;
 
 	// tree pointers
 	TreeNode* parent = nullptr;
