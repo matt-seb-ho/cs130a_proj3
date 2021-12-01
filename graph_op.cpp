@@ -2,13 +2,15 @@
 #include <iostream>
 #include <queue>
 
+int GraphOperator::label = 0;
+
 // --------------------
 // operations
 // --------------------
 bool GraphOperator::isAcyclic(GraphGenerator& gg) {
 	// clear all node visited flags
-	ResetVisited rv;
-	forEach(gg, &rv);
+	auto resetVisitedPtr = &resetVisited;
+	forEach(gg, resetVisitedPtr);
 	
 	// bfs through tree to check each component for cycles
 	TreeNode* curr;
@@ -37,12 +39,13 @@ bool GraphOperator::isAcyclic(GraphGenerator& gg) {
 
 void GraphOperator::connectedComponents(GraphGenerator& gg) {
 	// clear all node labels
-	ResetLabel rl;
-	forEach(gg, &rl);
+	auto resetLabelPtr = &resetLabel;
+	forEach(gg, resetLabelPtr);
 
+	GraphOperator::label = 0;
 	// iterate through nodes, labeling unlabeled nodes
-	LabelComponentHelper lch;
-	forEach(gg, &lch);
+	auto connectedComponentsHelperPtr = &connectedComponentsHelper;
+	forEach(gg, connectedComponentsHelperPtr);
 }
 
 // --------------------
@@ -87,36 +90,31 @@ void GraphOperator::labelComponent(TreeNode* node, int label, bool first) {
 	}
 }
 
-void GraphOperator::NodeFunctor::operator()(TreeNode* node) {
-	return;
-}
-
-void GraphOperator::ResetVisited::operator()(TreeNode* node) {
-	node->visited = false;
-}
-
-void GraphOperator::ResetLabel::operator()(TreeNode* node) {
-	node->label = -1;
-}
-
-void GraphOperator::LabelComponentHelper::operator()(TreeNode* node) {
-	if (node->label == -1) {
-		labelComponent(node, label++, true);
-		std::cout << '\n';
-	}
-}
-
-void GraphOperator::forEach(GraphGenerator& gg, NodeFunctor* func) {
+void GraphOperator::forEach(GraphGenerator& gg, void (*&func)(TreeNode* node)) {
 	if (gg.getRoot()) {	
 		forEach(gg.getRoot(), func);
 	}
 }
 
-void GraphOperator::forEach(TreeNode* root, NodeFunctor* func) {
+void GraphOperator::forEach(TreeNode* root, void (*&func)(TreeNode* node)) {
 	if (root->left)
 		forEach(root->left, func);
-	(*func)(root);
+	func(root);
 	if (root->right)
 		forEach(root->right, func);
 }
 
+void GraphOperator::resetVisited(TreeNode* node) {
+	node->visited = false;
+}
+
+void GraphOperator::resetLabel(TreeNode* node) {
+	node->label = -1;
+}
+
+void GraphOperator::connectedComponentsHelper(TreeNode* node) {
+	if (node->label == -1) {
+		labelComponent(node, GraphOperator::label++, true);
+		std::cout << '\n';
+	}
+}

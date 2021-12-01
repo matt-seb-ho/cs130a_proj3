@@ -132,10 +132,10 @@ void GraphGenerator::preOrderHelper(TreeNode* node) {
 	printOut += std::to_string(node->num);
 	printOut += " ";
 	if (node->left) {
-		inOrderHelper(node->left);
+		preOrderHelper(node->left);
 	}
 	if (node->right) {
-		inOrderHelper(node->right);
+		preOrderHelper(node->right);
 	}
 }
 
