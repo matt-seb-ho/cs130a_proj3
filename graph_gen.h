@@ -31,6 +31,7 @@ class GraphGenerator {
 		static void balance(TreeNode*& node);
 		static void rotateR(TreeNode*& node);
 		static void rotateL(TreeNode*& node);
+		static void addNeighbor(TreeNode* node, TreeNode* neighbor);
 
 		// data
 		TreeNode* root = nullptr;

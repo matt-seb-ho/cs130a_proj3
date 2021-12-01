@@ -23,8 +23,8 @@ void readInput(GraphGenerator& gg, std::string fname) {
 		x = stoi(line);
 		std::getline(ss, line, ',');
 		y = stoi(line);
-		gg.insertEdge(x, y);
 		// std::cout << "x, y: " << x << ", " << y << "\n";
+		gg.insertEdge(x, y);
 		// gg.printPreOrder();
 		counter++;
 		

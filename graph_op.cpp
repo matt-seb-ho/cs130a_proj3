@@ -58,7 +58,10 @@ bool GraphOperator::hasCycle(TreeNode* node, TreeNode* parent) {
 	node->visited = true;
 
 	// move on to neighbors
-	for (TreeNode* neighbor : node->neighbors) {
+	ListNode* neighborList = node->neighbors;
+	TreeNode* neighbor;
+	while (neighborList) {
+		neighbor = neighborList->vertex;
 		// skip parent, since tree edge != back edge
 		if (neighbor != parent) {
 			if (neighbor->visited) {
@@ -71,6 +74,7 @@ bool GraphOperator::hasCycle(TreeNode* node, TreeNode* parent) {
 				}
 			}
 		}
+		neighborList = neighborList->next;
 	}
 	return false;
 }
@@ -78,15 +82,20 @@ bool GraphOperator::hasCycle(TreeNode* node, TreeNode* parent) {
 void GraphOperator::labelComponent(TreeNode* node, int label, bool first) {
 	// mark node
 	node->label = label;
-	
+
 	// only print space if not first
 	std::cout << (first ? "" : " ") << node->num;
 
 	// recurse for unlabeled neighbors
-	for (TreeNode* neighbor : node->neighbors) {
+	ListNode* neighborList = node->neighbors;
+	TreeNode* neighbor;
+	// std::cout << "(neighbor, label): ";
+	while (neighborList) {
+		neighbor = neighborList->vertex;
 		if (neighbor->label == -1) {
 			labelComponent(neighbor, label);
 		}
+		neighborList = neighborList->next;
 	}
 }
 

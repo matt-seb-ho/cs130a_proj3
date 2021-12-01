@@ -107,9 +107,11 @@ void GraphGenerator::insertEdge(int num1, int num2) {
 		insertVertex(num2);
 		node2 = lookup(num2);
 	}
-
-	node1->neighbors.push_back(node2);
-	node2->neighbors.push_back(node1);
+	
+	addNeighbor(node1, node2);
+	addNeighbor(node2, node1);
+	// node1->neighbors.push_back(node2);
+	// node2->neighbors.push_back(node1);
 }
 
 GraphGenerator::~GraphGenerator() {
@@ -172,4 +174,23 @@ void GraphGenerator::rotateL(TreeNode*& node) {
 	// update heights
 	temp->height = std::max(height(temp->left), height(temp->right)) + 1;
 	node->height = std::max(height(node->left), height(node->right)) + 1;
+}
+
+void GraphGenerator::addNeighbor(TreeNode* node, TreeNode* neighbor) {
+	// special case for empty adjacency list
+	if (!node->neighbors) {
+		node->neighbors = new ListNode();
+		node->neighbors->vertex = neighbor;
+		return;
+	}
+	ListNode* neighborList = node->neighbors;
+	while (neighborList->next) {
+		if (neighborList->vertex == neighbor) {
+			// adjacency list already contains this vertex
+			return;
+		}
+		neighborList = neighborList->next;
+	}
+	neighborList->next = new ListNode();
+	neighborList->next->vertex = neighbor;
 }
