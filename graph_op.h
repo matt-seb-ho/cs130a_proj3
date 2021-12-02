@@ -2,7 +2,7 @@
 #define GRAPH_OP_H
 #include "graph_gen.h"
 #include "treenode.h"
-#include <unordered_set>
+#include <string>
 
 class GraphOperator {
 	public:
@@ -13,7 +13,7 @@ class GraphOperator {
 	private:
 		// helper routines
 		static bool hasCycle(TreeNode* node, TreeNode* parent);
-		static void labelComponent(TreeNode* node, int label, bool first = 0);
+		static void labelComponent(TreeNode* node, int label);
 
 		// applies function to each node in tree (in-order traversal)
 		static void forEach(GraphGenerator& gg, void (*&func)(TreeNode* node));
@@ -22,10 +22,12 @@ class GraphOperator {
 		// node functions
 		static void resetVisited(TreeNode* node);
 		static void resetLabel(TreeNode* node);
-		static void connectedComponentsHelper(TreeNode* node);
+		static void labelComponent(TreeNode* node);
+		static void addToComponentArray(TreeNode* node);
 
-		// static member to track current component number
+		// static members to track current component number & print-outs
 		static int label;
+		static std::string* components;
 };
 
 

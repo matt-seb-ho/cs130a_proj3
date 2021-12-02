@@ -3,6 +3,7 @@
 #include <queue>
 
 int GraphOperator::label = 0;
+std::string* GraphOperator::components = nullptr;
 
 // --------------------
 // operations
@@ -42,10 +43,22 @@ void GraphOperator::connectedComponents(GraphGenerator& gg) {
 	auto resetLabelPtr = &resetLabel;
 	forEach(gg, resetLabelPtr);
 
-	GraphOperator::label = 0;
 	// iterate through nodes, labeling unlabeled nodes
-	auto connectedComponentsHelperPtr = &connectedComponentsHelper;
-	forEach(gg, connectedComponentsHelperPtr);
+	label = 0;
+	void (*labelComponentPtr)(TreeNode* node) = &labelComponent;
+	forEach(gg, labelComponentPtr);
+
+	// build sorted string for each component
+	components = new std::string[label];
+	auto addToComponentsArrPtr = &addToComponentArray;
+	forEach(gg, addToComponentsArrPtr);
+
+	for (int i = 0; i < label; i++) {
+		std::cout << components[i] << std::endl;
+	}
+
+	delete [] components;
+	components = nullptr;
 }
 
 // --------------------
@@ -79,12 +92,9 @@ bool GraphOperator::hasCycle(TreeNode* node, TreeNode* parent) {
 	return false;
 }
 
-void GraphOperator::labelComponent(TreeNode* node, int label, bool first) {
+void GraphOperator::labelComponent(TreeNode* node, int label) {
 	// mark node
 	node->label = label;
-
-	// only print space if not first
-	std::cout << (first ? "" : " ") << node->num;
 
 	// recurse for unlabeled neighbors
 	ListNode* neighborList = node->neighbors;
@@ -120,9 +130,17 @@ void GraphOperator::resetLabel(TreeNode* node) {
 	node->label = -1;
 }
 
-void GraphOperator::connectedComponentsHelper(TreeNode* node) {
+// version callable with forEach
+void GraphOperator::labelComponent(TreeNode* node) {
 	if (node->label == -1) {
-		labelComponent(node, GraphOperator::label++, true);
-		std::cout << '\n';
+		labelComponent(node, GraphOperator::label++);
 	}
+}
+
+void GraphOperator::addToComponentArray(TreeNode* node) {
+	std::string& component = components[node->label];
+	if (component != "") {
+		component += " ";
+	}
+	component += std::to_string(node->num);
 }
