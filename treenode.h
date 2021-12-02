@@ -1,8 +1,6 @@
 #ifndef TREENODE_H
 #define TREENODE_H
 #include "linkedlist.h"
-// #include <vector>
-
 
 struct TreeNode {
 	// vertex number, AVL tree height, component label, visited status
@@ -18,7 +16,6 @@ struct TreeNode {
 
 	// graph neighbors
 	ListNode* neighbors = nullptr;
-	// std::vector<TreeNode*> neighbors;
 
 	~TreeNode() {
 		delete neighbors;

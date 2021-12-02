@@ -89,7 +89,6 @@ void GraphOperator::labelComponent(TreeNode* node, int label, bool first) {
 	// recurse for unlabeled neighbors
 	ListNode* neighborList = node->neighbors;
 	TreeNode* neighbor;
-	// std::cout << "(neighbor, label): ";
 	while (neighborList) {
 		neighbor = neighborList->vertex;
 		if (neighbor->label == -1) {

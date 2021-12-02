@@ -52,6 +52,7 @@ void GraphGenerator::insertVertex(int num) {
 	insertHelper(root, num);
 }
 
+// citation: insert based on textbook + TA Arjun Prakash's recitation slides
 void GraphGenerator::insertHelper(TreeNode*& root, int num) {
 	// standard BST insert
 	if (!root) {
@@ -110,8 +111,6 @@ void GraphGenerator::insertEdge(int num1, int num2) {
 	
 	addNeighbor(node1, node2);
 	addNeighbor(node2, node1);
-	// node1->neighbors.push_back(node2);
-	// node2->neighbors.push_back(node1);
 }
 
 GraphGenerator::~GraphGenerator() {

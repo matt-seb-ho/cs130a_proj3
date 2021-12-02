@@ -23,6 +23,8 @@ class GraphOperator {
 		static void resetVisited(TreeNode* node);
 		static void resetLabel(TreeNode* node);
 		static void connectedComponentsHelper(TreeNode* node);
+
+		// static member to track current component number
 		static int label;
 };
 
