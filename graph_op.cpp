@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 
+// initialize static members
 int GraphOperator::label = 0;
 std::string* GraphOperator::components = nullptr;
 
@@ -53,6 +54,7 @@ void GraphOperator::connectedComponents(GraphGenerator& gg) {
 	auto addToComponentsArrPtr = &addToComponentArray;
 	forEach(gg, addToComponentsArrPtr);
 
+	// print components and clean up
 	for (int i = 0; i < label; i++) {
 		std::cout << components[i] << std::endl;
 	}
