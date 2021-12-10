@@ -1,5 +1,6 @@
 #include "graph_gen.h"
 #include <iostream>
+#include <algorithm>
 
 // ctor
 GraphGenerator::GraphGenerator() {}
