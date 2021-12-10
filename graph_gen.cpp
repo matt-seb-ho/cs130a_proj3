@@ -1,6 +1,6 @@
 #include "graph_gen.h"
 #include <iostream>
-#include <algorithm>
+#include <algorithm> // std::max()
 
 // ctor
 GraphGenerator::GraphGenerator() {}
